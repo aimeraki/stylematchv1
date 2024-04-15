@@ -1,24 +1,107 @@
-import logo from './logo.svg';
+/*
+
+App - Stylematch
+Ver - 1.0
+by - Subu Sangameswar
+Last Updated - Apr 2024
+
+This program is property of StyleMatch Inc.
+This is the main program that displays an input label and brings back a response from an LLM
+*/
+
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import StringifyParam from './components/StringifyParam';
+import ShowMessages from './components/ShowMessages';
+
+const URL = 'https://swjy55qrh5.execute-api.us-west-2.amazonaws.com/dev/llm_invoke';
+
+
 
 function App() {
+
+  const [inputText, setInputText] = useState('');
+  const [usrMessage, setUsrMessage] = useState('');
+  const [aiResponse, setAIResponse] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+
+      //let body = encodeURIComponent(StringifyParam({ 'inputprompt': usrMessage }));
+      let body = StringifyParam({ 'inputprompt': usrMessage });
+      const url_with_parameters = `${URL}?${body}`;
+
+      try {
+
+        setLoading(true);
+        alert(url_with_parameters);
+
+        const response = await fetch(url_with_parameters, {
+          Method: 'GET',
+          Headers: {
+            Accept: 'application.json',
+            'Content-Type': 'application/json'
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Network Response Not Ok');
+        }
+
+        const responseData = await response.json();
+        alert(responseData);
+        setAIResponse(responseData);
+        setLoading(false);
+
+
+      } catch (Error) {
+        console.log('Error fetching data', Error);
+        setAIResponse('Error fetching data', Error);
+        setLoading(false);
+
+      }
+
+    };
+
+    fetchData();
+  }, [usrMessage]) //react to changes in usrMessage
+
+
+  const handleChange = (event) => {
+    setInputText(event.target.value);
+  };
+
+
+  const handleClick = () => {
+
+    //suggest me a dress for an casual evening in mumbai during monsoon
+
+    setUsrMessage(inputText);
+    setAIResponse("working ..");
+    setInputText('');
+  };
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <h1>StyleMatch App v1.0</h1>
+
+      <form>
+        <input type="text" value={inputText} onChange={handleChange} />
+        <button type="button" onClick={handleClick}>Get AI Response</button>
+      </form>
+
+      <div>
+        {loading ? (<ShowMessages label1={usrMessage} label2="loading.." />) : (
+          <ShowMessages label1={usrMessage} label2={aiResponse} />
+        )}
+      </div>
+
     </div>
+
   );
 }
 
