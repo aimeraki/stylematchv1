@@ -30,42 +30,53 @@ function App() {
     const fetchData = async () => {
 
       //let body = encodeURIComponent(StringifyParam({ 'inputprompt': usrMessage }));
-      let body = StringifyParam({ 'inputprompt': usrMessage });
+      let body = StringifyParam({ 'inputprompt': encodeURIComponent(usrMessage) });
       const url_with_parameters = `${URL}?${body}`;
 
-      try {
+      
 
-        setLoading(true);
-        alert(url_with_parameters);
+        try {
 
-        const response = await fetch(url_with_parameters, {
-          Method: 'GET',
-          Headers: {
-            Accept: 'application.json',
-            'Content-Type': 'application/json'
-          },
-        });
+          setLoading(true);
+          alert(url_with_parameters);
 
-        if (!response.ok) {
-          throw new Error('Network Response Not Ok');
+          const response = await fetch(url_with_parameters, {
+            method: 'GET',
+            headers: {
+              'Accept': '*',
+              'Content-Type': 'application/json'
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error('Network Response Not Ok');
+          }
+
+          // accepting the json response and extracting the body tag
+          const responseData = await response.json();
+          // Extract the body property from the object
+          setAIResponse(responseData.body);
+          //setAIResponse(JSON.stringify(responseData));
+          setLoading(false);
+
+
+        } catch (Error) {
+          console.log('Error fetching data', Error);
+          setAIResponse('Error fetching data', Error);
+          setLoading(false);
+
         }
 
-        const responseData = await response.json();
-        alert(responseData);
-        setAIResponse(responseData);
-        setLoading(false);
+        
 
+      };
 
-      } catch (Error) {
-        console.log('Error fetching data', Error);
-        setAIResponse('Error fetching data', Error);
-        setLoading(false);
-
-      }
-
-    };
-
-    fetchData();
+    //useEffect triggers when the form is loaded..let us check if there is
+    // value in the variable before calling the API
+    if (usrMessage !== '') {
+      fetchData();
+    }
+    
   }, [usrMessage]) //react to changes in usrMessage
 
 
