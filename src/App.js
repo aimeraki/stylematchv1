@@ -10,110 +10,95 @@ This is the main program that displays an input label and brings back a response
 */
 
 import React, { useState, useEffect } from 'react';
-import './App.css';
-import StringifyParam from './components/StringifyParam';
+import './App.scss'; // Assuming you have Pico CSS imported in this file.
+
+import Header from './components/Header';
+import Footer from './components/Footer';
 import ShowMessages from './components/ShowMessages';
 
 const URL = 'https://swjy55qrh5.execute-api.us-west-2.amazonaws.com/dev/llm_invoke';
 
 
+const InputComponent = ({ value, onChange, onClick }) => {
+  return (
+    <form>
+      <input type="text" value={value} onChange={onChange} />
+      <button type="button" onClick={onClick}>Get AI Response</button>
+    </form>
+  );
+};
 
-function App() {
+const StringifyParam = function(data) {
+  return Object.entries(data)
+    .map((e) => e.join('='))
+    .join('&');
+};
 
+const App = () => {
   const [inputText, setInputText] = useState('');
   const [usrMessage, setUsrMessage] = useState('');
   const [aiResponse, setAIResponse] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
     const fetchData = async () => {
-
-      //let body = encodeURIComponent(StringifyParam({ 'inputprompt': usrMessage }));
       let body = StringifyParam({ 'inputprompt': encodeURIComponent(usrMessage) });
       const url_with_parameters = `${URL}?${body}`;
 
-      
+      try {
+        setLoading(true);
+        const response = await fetch(url_with_parameters, {
+          method: 'GET',
+          headers: {
+            'Accept': '*',
+            'Content-Type': 'application/json'
+          },
+        });
 
-        try {
-
-          setLoading(true);
-          alert(url_with_parameters);
-
-          const response = await fetch(url_with_parameters, {
-            method: 'GET',
-            headers: {
-              'Accept': '*',
-              'Content-Type': 'application/json'
-            },
-          });
-
-          if (!response.ok) {
-            throw new Error('Network Response Not Ok');
-          }
-
-          // accepting the json response and extracting the body tag
-          const responseData = await response.json();
-          // Extract the body property from the object
-          setAIResponse(responseData.body);
-          //setAIResponse(JSON.stringify(responseData));
-          setLoading(false);
-
-
-        } catch (Error) {
-          console.log('Error fetching data', Error);
-          setAIResponse('Error fetching data', Error);
-          setLoading(false);
-
+        if (!response.ok) {
+          throw new Error('Network Response Not Ok');
         }
 
-        
+        const responseData = await response.json();
+        setAIResponse(responseData.body);
+        setLoading(false);
+      } catch (error) {
+        console.log('Error fetching data', error);
+        setAIResponse('Error fetching data', error);
+        setLoading(false);
+      }
+    };
 
-      };
-
-    //useEffect triggers when the form is loaded..let us check if there is
-    // value in the variable before calling the API
     if (usrMessage !== '') {
       fetchData();
     }
-    
-  }, [usrMessage]) //react to changes in usrMessage
-
+  }, [usrMessage]);
 
   const handleChange = (event) => {
     setInputText(event.target.value);
   };
 
-
   const handleClick = () => {
-
-    //suggest me a dress for an casual evening in mumbai during monsoon
-
     setUsrMessage(inputText);
     setAIResponse("working ..");
     setInputText('');
   };
 
-
   return (
     <div className="App">
-
-      <h1>StyleMatch App v1.0</h1>
-
-      <form>
-        <input type="text" value={inputText} onChange={handleChange} />
-        <button type="button" onClick={handleClick}>Get AI Response</button>
-      </form>
-
+      <Header />
+      <InputComponent value={inputText} onChange={handleChange} onClick={handleClick} />
       <div>
-        {loading ? (<ShowMessages label1={usrMessage} label2="loading.." />) : (
+        {loading ? (
+          <ShowMessages label1={usrMessage} label2="loading.." />
+        ) : (
           <ShowMessages label1={usrMessage} label2={aiResponse} />
         )}
       </div>
-
+      <Footer />
     </div>
-
   );
-}
+};
 
 export default App;
+

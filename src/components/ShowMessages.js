@@ -10,12 +10,19 @@ This component just displays two labels .. temporary implementation
 */
 
 import React from 'react';
+import './ShowMessages.scss'; // Import the Pico SASS file for styling
 
 const ShowMessages = ({ label1, label2 }) => {
   return (
-    <div>
-      <label>user: {label1}</label><br/>
-      <label>AI: {label2}</label>
+    <div className="message-container">
+      <div className="message user-message">
+        <span className="message-label">User:</span>
+        <span className="message-content">{label1}</span>
+      </div>
+      <div className="message ai-message">
+        <span className="message-label">AI:</span>
+        <span className="message-content">{label2}</span>
+      </div>
     </div>
   );
 };

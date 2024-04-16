@@ -1,0 +1,27 @@
+.message-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .message {
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+  }
+  
+  .user-message {
+    background-color: #e5e5e5; /* Light gray background for user messages */
+  }
+  
+  .ai-message {
+    background-color: #4CAF50; /* Green background for AI messages */
+  }
+  
+  .message-label {
+    font-weight: bold;
+  }
+  
+  .message-content {
+    margin-left: 10px;
+  }
+  
