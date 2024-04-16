@@ -4,7 +4,7 @@ import './Header.scss';
 const Header = () => {
   return (
     <header>
-      <h1>StyleMatch V1.0</h1>
+      <h1>StyleMatch V1.0 (Beta)</h1>
     </header>
   );
 };

@@ -22,7 +22,7 @@ const URL = 'https://swjy55qrh5.execute-api.us-west-2.amazonaws.com/dev/llm_invo
 const InputComponent = ({ value, onChange, onClick }) => {
   return (
     <form>
-      <input type="text" value={value} onChange={onChange} />
+      <input type="text" placeholder='ask me a question on Indian fashion' value={value} onChange={onChange} />
       <button type="button" onClick={onClick}>Get AI Response</button>
     </form>
   );
@@ -90,7 +90,7 @@ const App = () => {
       <InputComponent value={inputText} onChange={handleChange} onClick={handleClick} />
       <div>
         {loading ? (
-          <ShowMessages label1={usrMessage} label2="loading.." />
+          <ShowMessages label1={usrMessage} label2='' />
         ) : (
           <ShowMessages label1={usrMessage} label2={aiResponse} />
         )}

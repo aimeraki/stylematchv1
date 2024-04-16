@@ -11,17 +11,30 @@ This component just displays two labels .. temporary implementation
 
 import React from 'react';
 import './ShowMessages.scss'; // Import the Pico SASS file for styling
+import user from '../images/user.png';
+import bot from '../images/bot.png';
 
 const ShowMessages = ({ label1, label2 }) => {
+
+  //const base64String = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAABhklEQVR42u3XsQ3CMAwF0Kl/qcIJoAAJElx6PwBzW/VEjb2AKdqk7jPvbd0C9Hh2mf11r5k8zMN0GGQ7k2CGX8cYEDhnVywQwmzWC3IdO00A7IhoQjGKwWJqyhM0DiY8LhMAKzBgAz7p6Sbfw5X3gCRymkTi0ALF0IAy0HgCltX5QAdPh3BEWALnS6gKNwaAboOZcCDht1ChBwBu1C2Dzv//gCKyI0X8MgCXwAAAABJRU5ErkJggg==';
   return (
     <div className="message-container">
       <div className="message user-message">
-        <span className="message-label">User:</span>
-        <span className="message-content">{label1}</span>
+        {label1 !== '' && (
+          <>
+            <img src={user} alt="user" className='avatar' />
+            <span className="message-content">{label1}</span>
+          </>
+        )}
       </div>
       <div className="message ai-message">
-        <span className="message-label">AI:</span>
-        <span className="message-content">{label2}</span>
+        {label2 !== '' && (
+          <>
+            <img src={bot} alt="bot" className='avatar' />
+            <span className="message-content">{label2}</span>
+          </>
+        )}
+
       </div>
     </div>
   );
