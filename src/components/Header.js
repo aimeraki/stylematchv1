@@ -1,10 +1,11 @@
 import React from 'react';
 import './Header.scss';
+import logo from '../images/logo.png';
 
 const Header = () => {
   return (
     <header>
-      <h1>StyleMatch V1.0 (Beta)</h1>
+      <img src={logo} alt="logo"  />
     </header>
   );
 };
