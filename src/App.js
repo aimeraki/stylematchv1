@@ -16,8 +16,11 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import ShowMessages from './components/ShowMessages';
 
-const URL = 'https://swjy55qrh5.execute-api.us-west-2.amazonaws.com/dev/llm_invoke';
+// ver0.1 of API 
+//const URL = 'https://swjy55qrh5.execute-api.us-west-2.amazonaws.com/dev/llm_invoke';
 
+// ver0.2 of API - include image 
+const URL = 'https://nq6kwer0pc.execute-api.us-west-2.amazonaws.com/dev/invokellm';
 
 const InputComponent = ({ value, onChange, onClick }) => {
   return (
@@ -38,6 +41,7 @@ const App = () => {
   const [inputText, setInputText] = useState('');
   const [usrMessage, setUsrMessage] = useState('');
   const [aiResponse, setAIResponse] = useState('');
+  const [imgURL, setimgURL] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -60,11 +64,14 @@ const App = () => {
         }
 
         const responseData = await response.json();
-        setAIResponse(responseData.body);
+        const responseBody = JSON.parse(responseData.body);
+        setAIResponse(responseBody.response);
+        setimgURL(responseBody.image_url);
         setLoading(false);
       } catch (error) {
         console.log('Error fetching data', error);
         setAIResponse('Error fetching data', error);
+        setimgURL('');
         setLoading(false);
       }
     };
@@ -92,7 +99,7 @@ const App = () => {
         {loading ? (
           <ShowMessages label1={usrMessage} label2='' />
         ) : (
-          <ShowMessages label1={usrMessage} label2={aiResponse} />
+          <ShowMessages label1={usrMessage} label2={aiResponse} img = {imgURL}/>
         )}
       </div>
       <Footer />

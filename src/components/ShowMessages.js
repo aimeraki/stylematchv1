@@ -14,7 +14,7 @@ import './ShowMessages.scss'; // Import the Pico SASS file for styling
 import user from '../images/user.png';
 import bot from '../images/bot.png';
 
-const ShowMessages = ({ label1, label2 }) => {
+const ShowMessages = ({ label1, label2, img }) => {
 
   //const base64String = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAABhklEQVR42u3XsQ3CMAwF0Kl/qcIJoAAJElx6PwBzW/VEjb2AKdqk7jPvbd0C9Hh2mf11r5k8zMN0GGQ7k2CGX8cYEDhnVywQwmzWC3IdO00A7IhoQjGKwWJqyhM0DiY8LhMAKzBgAz7p6Sbfw5X3gCRymkTi0ALF0IAy0HgCltX5QAdPh3BEWALnS6gKNwaAboOZcCDht1ChBwBu1C2Dzv//gCKyI0X8MgCXwAAAABJRU5ErkJggg==';
   return (
@@ -32,6 +32,7 @@ const ShowMessages = ({ label1, label2 }) => {
           <>
             <img src={bot} alt="bot" className='avatar' />
             <span className="message-content">{label2}</span>
+            <img src={img} alt="temp_img" />
           </>
         )}
 
