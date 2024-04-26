@@ -15,24 +15,42 @@ import ShowMessages from './ShowMessages';
 // ver0.2 of API - include image 
 const URL = 'https://nq6kwer0pc.execute-api.us-west-2.amazonaws.com/dev/invokellm';
 
-const InputComponent = ({ value, onChange, onClick }) => {
+
+const HelpComponent = () => {
   return (
-    <form>
-      <input type="search" placeholder='I can help recommend Indian dresses for women. Please tell me about your preferences and occasion so I can customize' value={value} onChange={onChange} />
-      <button type="button" data-tooltip="ask the AI" onClick={onClick}>Ask</button>
-    </form>
+    <details>
+      <summary><h6>Help</h6></summary>
+      <ul><li><small>Example 1: Recommend a saree for haldi ceremony. I prefer intricate patterns</small></li>
+        <li><small>Example 2: Suggest a chudidhar for an elegant wedding. I like colors of red and pink</small></li>
+      </ul>
+    </details>
   );
 };
 
-const StringifyParam = function(data) {
+const InputComponent = ({ value, onChange, onClick }) => {
+  return (
+    <div class="grid">
+      <form>
+        <input type="search" placeholder='I can help recommend Indian dresses for women. Please tell me about your preferences and occasion so I can customize' value={value} onChange={onChange} />
+
+        <div>
+          <button type="button" data-tooltip="ask the AI" onClick={onClick}>Ask</button>
+        </div>
+        <div><HelpComponent /></div>
+      </form></div>
+
+  );
+};
+
+const StringifyParam = function (data) {
   return Object.entries(data)
     .map((e) => e.join('='))
     .join('&');
 };
 
 // function that review user input and deletes unnecessary words
-const handleEliminate = function(data) {
-  const wordsToRemove = ['fuck', 'boobs', 'stop', 'stupid', 'weather','cunt', 'sex'];
+const handleEliminate = function (data) {
+  const wordsToRemove = ['fuck', 'boobs', 'stop', 'stupid', 'weather', 'cunt', 'sex'];
   let resultSentence = data;
   wordsToRemove.forEach(word => {
     resultSentence = resultSentence.replace(new RegExp(word, 'gi'), '');
@@ -98,16 +116,17 @@ const Chat = () => {
 
   return (
     <div className="container">
-     
+
       <InputComponent value={inputText} onChange={handleChange} onClick={handleClick} />
+
       <div>
         {loading ? (
           <ShowMessages label1={usrMessage} label2='' />
         ) : (
-          <ShowMessages label1={usrMessage} label2={aiResponse} img = {imgURL}/>
+          <ShowMessages label1={usrMessage} label2={aiResponse} img={imgURL} />
         )}
       </div>
-     
+
     </div>
   );
 };
