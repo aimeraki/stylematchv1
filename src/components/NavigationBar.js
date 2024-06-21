@@ -5,7 +5,7 @@ import './NavigationBar.scss';
 
 const NavigationBar = () => {
   return (
-    <nav className="navbar">
+    <nav>
       <ul>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/chat">Designer</Link></li>

@@ -27,7 +27,7 @@ import NewChat from './components/NewChat';
 const App = () => {
   return (
     <Router>
-      <div className="App">
+      <div className="container">
         <Header />
         <NavigationBar />
         <div className="content">

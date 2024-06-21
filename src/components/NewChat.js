@@ -49,15 +49,24 @@ const NewChat = () => {
 
       if (primaryColor  && primaryColor !== '') {
         parts.push(`in ${primaryColor}`);
-      } 
+      }
+
+      if (freeText) {
+        parts.push(freeText);
+      }
+    } else {
+
+
+      if (freeText) {
+        parts.push(freeText);
+      }
+      else {
+        parts.push(' hair styles for haldi');
+      }
+
     }
 
-    if (freeText) {
-      parts.push(freeText);
-    }
-    else {
-      parts.push(' hair styles for haldi');
-    }
+    
 
     // Combine the parts into a sentence
     const sentence = parts.join(' ') + '.';
@@ -112,7 +121,7 @@ const NewChat = () => {
     <div className="two-column-container">
       
       <div className="column">
-        <h2>Your Choices:</h2>
+        <h2>Your Choices</h2>
         <div>
           <label>Request Type:</label>
           <select value={requestType} onChange={(e) => setRequestType(e.target.value)}>
@@ -152,12 +161,12 @@ const NewChat = () => {
         </div>
         <div>
           <label>Other Information:</label>
-          <input type="text" value={freeText} onChange={(e) => setFreeText(e.target.value)} />
+          <input type="text" placeholder="enter any other necessary information" value={freeText} onChange={(e) => setFreeText(e.target.value)} />
         </div>
         <button onClick={handleSubmit}>Submit</button>
       </div>
       <div className="column">
-        <h2>Designer Response:</h2>
+        <h2>Designer Response</h2>
         
         {loading ? (
           <ShowMessages label1={combinedSentence} label2='' />
