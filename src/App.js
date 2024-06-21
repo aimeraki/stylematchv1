@@ -21,8 +21,8 @@ import Footer from './components/Footer';
 import Directory from './components/Directory';
 import About from './components/About';
 
-import NewChat from './components/NewChat';
-
+//import NewChat from './components/NewChat';
+import Chat2 from './components/Chat2';
 
 const App = () => {
   return (
@@ -33,7 +33,7 @@ const App = () => {
         <div className="content">
         <Routes>
             <Route exact path="/" element = {<About />} />
-            <Route path="/chat" element={<NewChat />} />
+            <Route path="/chat" element={<Chat2 />} />
             <Route path="/resources" element = {<Directory/>} />
             
           </Routes>

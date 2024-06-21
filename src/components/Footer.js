@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <footer>
       (c) copyright 2024 stylematch <br/>
-      v0.25
+      v0.26
     </footer>
   );
 };
