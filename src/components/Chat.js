@@ -8,6 +8,7 @@ import React, { useState, useEffect } from 'react';
 import './Chat.scss'; // Assuming you have Pico CSS imported in this file.
 
 import ShowMessages from './ShowMessages';
+import Dropdown from './Dropdown';
 
 // ver0.1 of API 
 //const URL = 'https://swjy55qrh5.execute-api.us-west-2.amazonaws.com/dev/llm_invoke';
@@ -65,6 +66,17 @@ const Chat = () => {
   const [aiResponse, setAIResponse] = useState('');
   const [imgURL, setimgURL] = useState('');
   const [loading, setLoading] = useState(true);
+  const [selectedOption1, setSelectedOption1] = useState(null);
+
+  const options1 = [
+    { id: 1, label: 'Example 1: Recommend a saree for haldi ceremony. I prefer intricate patterns' },
+    { id: 2, label: 'Example 2: Suggest a dress for haldi ceremony. Im tall with long dark hair' },
+    { id: 3, label: 'Example 3: Describe hair styles for haldi' },
+  ];
+
+  const handleSelectOption1 = (option) => {
+    setSelectedOption1(option);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -119,6 +131,13 @@ const Chat = () => {
 
       <InputComponent value={inputText} onChange={handleChange} onClick={handleClick} />
 
+      <div><Dropdown
+        title="Help"
+        options={options1}
+        onSelect={handleSelectOption1}
+        selectedValue={selectedOption1}
+        placeholder=""
+      /></div>
       <div>
         {loading ? (
           <ShowMessages label1={usrMessage} label2='' />

@@ -5,7 +5,7 @@ import logo from '../images/logo.png';
 const Header = () => {
   return (
     <header>
-      <img src={logo} alt="logo" className='logoimg' />
+      <img src={logo} alt="logo" className='logo' />
     </header>
   );
 };
